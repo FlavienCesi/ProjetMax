@@ -30,6 +30,20 @@ public class GarageService {
         return garageRepository.findById(id_garage);
     }
 
+    public List<Garage> getGarageByNom(String nom) {
+        return garageRepository.findByNom(nom);
+    }
+
+    public List<Garage> getGarageByVille(String nomVille) {
+        Ville ville = villeRepository.findByVille(nomVille);
+        return garageRepository.findByVille(ville);
+    }
+
+    public List<Garage> getGarageByNomAndVille(String nom, String nomVille) {
+        Ville ville = villeRepository.findByVille(nomVille);
+        return garageRepository.findByNomAndVille(nom, ville);
+    }
+
     public Garage addGarage(Garage garage) {
         Ville ville = villeRepository.findByVille(garage.getVille().getVille());
         if (ville == null) {

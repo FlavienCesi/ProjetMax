@@ -1,6 +1,7 @@
 package com.api.projettest.projet.controller;
 
 import com.api.projettest.projet.model.Garage;
+import com.api.projettest.projet.model.Ville;
 import com.api.projettest.projet.service.GarageService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,20 @@ public class GarageController {
     @GetMapping("/garages/{id_garage}")
     public Optional<Garage> getGarageById(@PathVariable Long id_garage){
         return garageService.getGarageById(id_garage);
+    }
+    @GetMapping("/garages/nom/{nom}")
+    public List<Garage> readbynom(@PathVariable String nom) {
+        return garageService.getGarageByNom(nom);
+    }
+
+    @GetMapping("/garages/ville/{ville}")
+    public List<Garage> readbyville(@PathVariable String ville) {
+        return garageService.getGarageByVille(ville);
+    }
+
+    @GetMapping("/garages/nom&ville/{nom}&{ville}")
+    public List<Garage> readbynomandville(@PathVariable String nom, @PathVariable String ville) {
+        return garageService.getGarageByNomAndVille(nom, ville);
     }
 
     @PostMapping("/garages")
