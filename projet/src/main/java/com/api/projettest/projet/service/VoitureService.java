@@ -20,7 +20,7 @@ public class VoitureService {
     private final MarqueRepository marqueRepository;
     private final ModeleRepository modeleRepository;
     private final AnneeRepository anneeRepository;
-    //private final GarageRepository garageRepository;
+    private final CarburantRepository carburantRepository;
 
     public List<Voiture> getAllVoitures() {
         return voitureRepository.findAll();
@@ -49,9 +49,16 @@ public class VoitureService {
             annee.setAnnee(voiture.getAnnee().getAnnee());
             annee = anneeRepository.save(annee);
         }
+        Carburant carburant = carburantRepository.findByCarburant(voiture.getCarburant().getCarburant());
+        if (carburant == null) {
+            carburant = new Carburant();
+            carburant.setCarburant(voiture.getCarburant().getCarburant());
+            carburant = carburantRepository.save(carburant);
+        }
         voiture.setMarque(marque);
         voiture.setModele(modele);
         voiture.setAnnee(annee);
+        voiture.setCarburant(carburant);
         return voitureRepository.save(voiture);
     }
     
@@ -60,6 +67,7 @@ public class VoitureService {
         return voitureRepository.findById(id_voiture)
                 .map(p-> {
                     p.setPlaque(voiture.getPlaque());
+                    p.setKilometre(voiture.getKilometre());
                     Marque marque = marqueRepository.findByMarque(voiture.getMarque().getMarque());
                     if (marque == null) {
                         marque = new Marque();
@@ -78,9 +86,17 @@ public class VoitureService {
                         annee.setAnnee(voiture.getAnnee().getAnnee());
                         annee = anneeRepository.save(annee);
                     }
+                    Carburant carburant = carburantRepository.findByCarburant(voiture.getCarburant().getCarburant());
+                    if (carburant == null) {
+                        carburant = new Carburant();
+                        carburant.setCarburant(voiture.getCarburant().getCarburant());
+                        carburant = carburantRepository.save(carburant);
+                    }
                     p.setMarque(marque);
                     p.setModele(modele);
                     p.setAnnee(annee);
+                    p.setCarburant(carburant);
+                    p.setGarage(voiture.getGarage());
     
                     return voitureRepository.save(p);
                 }).orElseThrow(() -> new RuntimeException("Voiture non trouvé !"));

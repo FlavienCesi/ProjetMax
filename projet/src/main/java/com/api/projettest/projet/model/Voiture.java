@@ -15,6 +15,8 @@ public class Voiture {
     private Long id_voiture;
     @Column(name = "plaque")
     private String plaque;
+    @Column(name = "kilometre")
+    private Integer kilometre;
     @ManyToOne
     @JoinColumn(name = "id_marque")
     private Marque marque;
@@ -24,6 +26,9 @@ public class Voiture {
     @ManyToOne
     @JoinColumn(name = "id_annee")
     private Annee annee;
+    @ManyToOne
+    @JoinColumn(name = "id_carburant")
+    private Carburant carburant;
     @ManyToOne
     @JoinColumn(name = "id_garage", nullable = true)
     private Garage garage;
