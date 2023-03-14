@@ -8,7 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.api.projettest.projet.model.*;
 import com.api.projettest.projet.repository.*;
+import com.api.projettest.projet.specification.*;
 
+import com.api.projettest.projet.model.VoitureDto;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
+import org.springframework.data.jpa.domain.Specification;
 
 import lombok.AllArgsConstructor;
 
@@ -22,8 +29,30 @@ public class VoitureService {
     private final AnneeRepository anneeRepository;
     private final CarburantRepository carburantRepository;
 
-    public List<Voiture> getAllVoitures() {
-        return voitureRepository.findAll();
+    public VoitureDto getVoituresByCriteria(
+        Integer kilometrageMin,
+        Integer kilometrageMax,
+        String marque,
+        String modele,
+        Integer anneeMin,
+        Integer anneeMax,
+        List<String> carburants,
+        Boolean garage,
+        Integer page,
+        Integer perPage) {
+        Specification<Voiture> spec = Specification.where(VoitureSpecifications.filterByMarque(marque))
+        .and(VoitureSpecifications.filterByKilometreBetween(kilometrageMin, kilometrageMax))
+        .and(VoitureSpecifications.filterByModele(modele))
+        .and(VoitureSpecifications.filterByAnneeBetween(anneeMin, anneeMax))
+        .and(VoitureSpecifications.filterByCarburant(carburants))
+        .and(VoitureSpecifications.filterByGarage(garage));
+
+        Pageable pageable = PageRequest.of(page - 1, perPage);
+        Page<Voiture> voitures = voitureRepository.findAll(spec, pageable);
+        long total = voitures.getTotalElements();
+        int totalPages = voitures.getTotalPages();
+        List<Voiture> data = voitures.getContent();
+        return new VoitureDto(page, perPage, total, totalPages, data);
     }
 
     public Optional<Voiture> getVoitureById(Long id_voiture) {

@@ -12,6 +12,11 @@ import com.api.projettest.projet.repository.GarageRepository;
 import com.api.projettest.projet.model.Ville;
 import com.api.projettest.projet.repository.VilleRepository;
 
+import com.api.projettest.projet.model.GarageDto;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
 import lombok.AllArgsConstructor;
 
 @Service
@@ -22,26 +27,46 @@ public class GarageService {
     private final GarageRepository garageRepository;
     private final VilleRepository villeRepository;
 
-    public List<Garage> getAllGarages() {
-        return garageRepository.findAll();
+    public GarageDto getAllGarages(int page, int perPage) {
+        Pageable pageable = PageRequest.of(page - 1, perPage);
+        Page<Garage> garages = garageRepository.findAll(pageable);
+        long total = garages.getTotalElements();
+        int totalPages = garages.getTotalPages();
+        List<Garage> data = garages.getContent();
+        return new GarageDto(page, perPage, total, totalPages, data);
     }
 
     public Optional<Garage> getGarageById(Long id_garage) {
         return garageRepository.findById(id_garage);
     }
 
-    public List<Garage> getGarageByNom(String nom) {
-        return garageRepository.findByNom(nom);
+    public GarageDto getGarageByNom(String nom, int page, int perPage) {
+        Pageable pageable = PageRequest.of(page - 1, perPage);
+        Page<Garage> garages = garageRepository.findByNom(nom, pageable);
+        long total = garages.getTotalElements();
+        int totalPages = garages.getTotalPages();
+        List<Garage> data = garages.getContent();
+        return new GarageDto(page, perPage, total, totalPages, data);
     }
 
-    public List<Garage> getGarageByVille(String nomVille) {
+    public GarageDto getGarageByVille(String nomVille, int page, int perPage) {
         Ville ville = villeRepository.findByVille(nomVille);
-        return garageRepository.findByVille(ville);
+        Pageable pageable = PageRequest.of(page - 1, perPage);
+        Page<Garage> garages = garageRepository.findByVille(ville, pageable);
+        long total = garages.getTotalElements();
+        int totalPages = garages.getTotalPages();
+        List<Garage> data = garages.getContent();
+        return new GarageDto(page, perPage, total, totalPages, data);
     }
 
-    public List<Garage> getGarageByNomAndVille(String nom, String nomVille) {
+    public GarageDto getGarageByNomAndVille(String nom, String nomVille, int page, int perPage) {
         Ville ville = villeRepository.findByVille(nomVille);
-        return garageRepository.findByNomAndVille(nom, ville);
+        Pageable pageable = PageRequest.of(page - 1, perPage);
+        Page<Garage> garages = garageRepository.findByNomAndVille(nom, ville, pageable);
+        long total = garages.getTotalElements();
+        int totalPages = garages.getTotalPages();
+        List<Garage> data = garages.getContent();
+        return new GarageDto(page, perPage, total, totalPages, data);
     }
 
     public Garage addGarage(Garage garage) {
