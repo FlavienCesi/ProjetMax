@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 
 public interface GarageRepository extends JpaRepository<Garage, Long> {
-    Page<Garage> findByNom(String nom, Pageable page);
+    Page<Garage> findByNomStartingWith(String nom, Pageable page);
     Page<Garage> findByVille(Ville ville, Pageable page);
-    Page<Garage> findByNomAndVille(String nom, Ville ville, Pageable page);
+    Page<Garage> findByNomStartingWithAndVille(String nom, Ville ville, Pageable page);
 }

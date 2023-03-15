@@ -42,7 +42,7 @@ public class GarageService {
 
     public GarageDto getGarageByNom(String nom, int page, int perPage) {
         Pageable pageable = PageRequest.of(page - 1, perPage);
-        Page<Garage> garages = garageRepository.findByNom(nom, pageable);
+        Page<Garage> garages = garageRepository.findByNomStartingWith(nom, pageable);
         long total = garages.getTotalElements();
         int totalPages = garages.getTotalPages();
         List<Garage> data = garages.getContent();
@@ -62,7 +62,7 @@ public class GarageService {
     public GarageDto getGarageByNomAndVille(String nom, String nomVille, int page, int perPage) {
         Ville ville = villeRepository.findByVille(nomVille);
         Pageable pageable = PageRequest.of(page - 1, perPage);
-        Page<Garage> garages = garageRepository.findByNomAndVille(nom, ville, pageable);
+        Page<Garage> garages = garageRepository.findByNomStartingWithAndVille(nom, ville, pageable);
         long total = garages.getTotalElements();
         int totalPages = garages.getTotalPages();
         List<Garage> data = garages.getContent();

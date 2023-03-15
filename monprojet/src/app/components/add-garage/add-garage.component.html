@@ -1,3 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">Mon Site</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/garages">Liste des Garages</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/garage/add">Créer un Garage</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/voitures">Liste des Voitures</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/voiture/add">Créer une Voiture</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
 <div class="container">
   <h2>Ajouter un nouveau garage</h2>
   <form (ngSubmit)="addGarage()" #garageForm="ngForm">

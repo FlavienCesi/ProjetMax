@@ -10,11 +10,11 @@ import { VoituresListComponent } from './components/voitures-list/voitures-list.
 const routes: Routes = [
   { path: '', redirectTo: 'garages', pathMatch: 'full' },
   { path: 'garages', component: GaragesListComponent },
-  { path: 'garages/add', component: AddGarageComponent },
-  { path: 'garages/:id', component: GarageDetailsComponent },
+  { path: 'garage/add', component: AddGarageComponent },
+  { path: 'garage/:id', component: GarageDetailsComponent },
   { path: 'voitures', component: VoituresListComponent },
-  { path: 'voitures/add', component: AddVoitureComponent },
-  { path: 'voitures/:id', component: VoitureDetailsComponent },
+  { path: 'voiture/add', component: AddVoitureComponent },
+  { path: 'voiture/:id', component: VoitureDetailsComponent },
 ];
 
 @NgModule({

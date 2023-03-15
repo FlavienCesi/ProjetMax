@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Garage } from '../models/garage.model';
+import { GarageData } from '../models/garage-data.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,9 +18,9 @@ export class GarageService {
     perPage: number,
     nom: string,
     ville: string
-  ): Observable<Garage[]> {
+  ): Observable<GarageData> {
     const url = `${this.baseUrl}?page=${page}&perPage=${perPage}&nom=${nom}&ville=${ville}`;
-    return this.http.get<Garage[]>(url);
+    return this.http.get<GarageData>(url);
   }
 
   getGarageById(id: number): Observable<Garage> {

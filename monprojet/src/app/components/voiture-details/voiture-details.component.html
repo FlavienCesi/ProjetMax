@@ -1,1 +1,133 @@
-<p>voiture-details works!</p>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">Mon Site</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/garages">Liste des Garages</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/garage/add">Créer un Garage</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/voitures">Liste des Voitures</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/voiture/add">Créer une Voiture</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <h2>Détails de la voiture</h2>
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="cancelMessage" class="alert alert-warning">
+    {{ cancelMessage }}
+  </div>
+  <form #garageForm="ngForm" (ngSubmit)="saveVoiture()">
+    <div class="form-group">
+      <label>ID:</label>
+      <input
+        class="form-control"
+        type="text"
+        name="id_voiture"
+        [(ngModel)]="voiture.id_voiture"
+        disabled
+      />
+    </div>
+    <div class="form-group">
+      <label>Plaque:</label>
+      <input
+        class="form-control"
+        type="text"
+        name="plaque"
+        [(ngModel)]="voiture.plaque"
+        [disabled]="!isEditing"
+      />
+    </div>
+    <div class="form-group">
+      <label>Kilomètre</label>
+      <input
+        class="form-control"
+        type="text"
+        name="kilometre"
+        [(ngModel)]="voiture.kilometre"
+        [disabled]="!isEditing"
+      />
+    </div>
+    <div class="form-group">
+      <label>Marque</label>
+      <input
+        class="form-control"
+        type="text"
+        name="marque"
+        [(ngModel)]="voiture.marque!.marque"
+        [disabled]="!isEditing"
+      />
+    </div>
+    <div class="form-group">
+      <label>Modèle:</label>
+      <input
+        class="form-control"
+        type="text"
+        name="modele"
+        [(ngModel)]="voiture.modele!.modele"
+        [disabled]="!isEditing"
+      />
+    </div>
+    <div class="form-group">
+      <label>Année:</label>
+      <input
+        class="form-control"
+        type="text"
+        name="annee"
+        [(ngModel)]="voiture.annee!.annee"
+        [disabled]="!isEditing"
+      />
+    </div>
+    <div class="form-group">
+      <label>Carburant:</label>
+      <input
+        class="form-control"
+        type="text"
+        name="carburant"
+        [(ngModel)]="voiture.carburant!.carburant"
+        [disabled]="!isEditing"
+      />
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit" [disabled]="!isEditing">
+        Enregistrer
+      </button>
+      <button
+        class="btn btn-secondary"
+        type="button"
+        (click)="cancelEdit()"
+        [disabled]="!isEditing"
+      >
+        Annuler
+      </button>
+    </div>
+  </form>
+  <div *ngIf="!isEditing">
+    <button class="btn btn-primary" (click)="editVoiture()">Modifier</button>
+    <button class="btn btn-danger" type="button" (click)="deleteVoiture()">
+      Supprimer
+    </button>
+  </div>
+</div>

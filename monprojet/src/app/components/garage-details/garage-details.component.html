@@ -1,1 +1,113 @@
-<p>garage-details works!</p>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">Mon Site</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/garages">Liste des Garages</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/garage/add">Créer un Garage</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/voitures">Liste des Voitures</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/voiture/add">Créer une Voiture</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <h2>Détails du garage {{ garage.nom }}</h2>
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="cancelMessage" class="alert alert-warning">
+    {{ cancelMessage }}
+  </div>
+  <form #garageForm="ngForm" (ngSubmit)="saveGarage()">
+    <div class="form-group">
+      <label>ID:</label>
+      <input
+        class="form-control"
+        type="text"
+        name="id_garage"
+        [(ngModel)]="garage.id_garage"
+        disabled
+      />
+    </div>
+    <div class="form-group">
+      <label>Nom:</label>
+      <input
+        class="form-control"
+        type="text"
+        name="nom"
+        [(ngModel)]="garage.nom"
+        [disabled]="!isEditing"
+      />
+    </div>
+    <div class="form-group">
+      <label>Numéro de téléphone:</label>
+      <input
+        class="form-control"
+        type="text"
+        name="numeroTelephone"
+        [(ngModel)]="garage.numeroTelephone"
+        [disabled]="!isEditing"
+      />
+    </div>
+    <div class="form-group">
+      <label>Email:</label>
+      <input
+        class="form-control"
+        type="text"
+        name="mail"
+        [(ngModel)]="garage.mail"
+        [disabled]="!isEditing"
+      />
+    </div>
+    <div class="form-group">
+      <label>Ville:</label>
+      <input
+        class="form-control"
+        type="text"
+        name="ville"
+        [(ngModel)]="garage.ville!.ville"
+        [disabled]="!isEditing"
+      />
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit" [disabled]="!isEditing">
+        Enregistrer
+      </button>
+      <button
+        class="btn btn-secondary"
+        type="button"
+        (click)="cancelEdit()"
+        [disabled]="!isEditing"
+      >
+        Annuler
+      </button>
+    </div>
+  </form>
+  <div *ngIf="!isEditing">
+    <button class="btn btn-primary" (click)="editGarage()">Modifier</button>
+    <button class="btn btn-danger" type="button" (click)="deleteGarage()">
+      Supprimer
+    </button>
+  </div>
+</div>
