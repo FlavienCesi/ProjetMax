@@ -16,7 +16,7 @@ public class GarageController {
     private final GarageService garageService;
 
     @GetMapping("/garages")
-    public GarageDto read(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "1") int perPage, @RequestParam(required = false, defaultValue = "") String nom, @RequestParam(required = false, defaultValue = "") String ville) {
+    public GarageDto read(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "6") int perPage, @RequestParam(required = false, defaultValue = "") String nom, @RequestParam(required = false, defaultValue = "") String ville) {
         if(nom.equals("") && ville.equals("")){
             return garageService.getAllGarages(page, perPage);
         }

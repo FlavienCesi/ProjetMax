@@ -18,7 +18,7 @@ public class VoitureController {
     @GetMapping("/voitures")
     public VoitureDto readVoiture(
         @RequestParam(defaultValue = "1") int page,
-        @RequestParam(defaultValue = "1") int perPage,
+        @RequestParam(defaultValue = "6") int perPage,
         @RequestParam(required = false) Integer KilometreMin,
         @RequestParam(required = false) Integer KilometreMax,
         @RequestParam(required = false) String Marque,
