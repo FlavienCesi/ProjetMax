@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Voiture } from 'src/app/models/voiture.model';
 import { VoitureService } from 'src/app/services/voiture.service';
+import { Garage } from 'src/app/models/garage.model';
+import { GarageData } from 'src/app/models/garage-data.model';
+import { GarageService } from 'src/app/services/garage.service';
 
 @Component({
   selector: 'app-add-voiture',
@@ -14,13 +17,25 @@ export class AddVoitureComponent implements OnInit {
   errorMessage = '';
   years: number[] = [];
 
-  constructor(private voitureService: VoitureService) {}
+  garages: Garage[] = [];
+  page: number = 1;
+  perPage: number = 50;
+  total: number = 0;
+  totalPages: number = 0;
+  nom: string = '';
+  ville: string = '';
+
+  constructor(
+    private voitureService: VoitureService,
+    private garageService: GarageService
+  ) {}
 
   ngOnInit() {
     const currentYear = new Date().getFullYear();
     for (let i = currentYear; i >= 1990; i--) {
       this.years.push(i);
     }
+    this.getGarages();
   }
 
   addVoiture() {
@@ -57,5 +72,20 @@ export class AddVoitureComponent implements OnInit {
 
   getCurrentYear(): number {
     return new Date().getFullYear();
+  }
+
+  getGarages(): void {
+    this.garageService
+      .getAllGarages(this.page, this.perPage, this.nom, this.ville)
+      .subscribe((garages: GarageData) => {
+        this.garages = garages.data;
+        this.total = garages.total;
+        this.totalPages = garages.total_pages;
+      });
+  }
+
+  search(): void {
+    this.page = 1;
+    this.getGarages();
   }
 }

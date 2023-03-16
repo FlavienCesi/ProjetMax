@@ -125,7 +125,11 @@ public class VoitureService {
                     p.setModele(modele);
                     p.setAnnee(annee);
                     p.setCarburant(carburant);
-                    p.setGarage(voiture.getGarage());
+                    if (voiture.getGarage() != null && voiture.getGarage().getId_garage() != null && voiture.getGarage().getId_garage().equals(0L)) {
+                        p.setGarage(null);
+                    } else {
+                        p.setGarage(voiture.getGarage());
+                    }
     
                     return voitureRepository.save(p);
                 }).orElseThrow(() -> new RuntimeException("Voiture non trouvé !"));

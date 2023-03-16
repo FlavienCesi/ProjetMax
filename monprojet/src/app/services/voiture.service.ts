@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Voiture } from '../models/voiture.model';
 import { VoitureData } from '../models/voiture-data.model';
+import { GarageData } from '../models/garage-data.model';
 
 @Injectable({
   providedIn: 'root',
@@ -67,5 +68,15 @@ export class VoitureService {
   deleteVoiture(id: number): Observable<any> {
     const url = `${this.baseUrl}/${id}`;
     return this.http.delete(url, { responseType: 'text' });
+  }
+
+  getAllGarages(
+    page: number,
+    perPage: number,
+    nom: string,
+    ville: string
+  ): Observable<GarageData> {
+    const url = `http://localhost:8080/api/garages?page=${page}&perPage=${perPage}&nom=${nom}&ville=${ville}`;
+    return this.http.get<GarageData>(url);
   }
 }

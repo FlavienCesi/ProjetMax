@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Voiture } from 'src/app/models/voiture.model';
 import { VoitureService } from 'src/app/services/voiture.service';
+import { Garage } from 'src/app/models/garage.model';
+import { GarageData } from 'src/app/models/garage-data.model';
+import { GarageService } from 'src/app/services/garage.service';
 
 @Component({
   selector: 'app-voiture-details',
@@ -14,8 +17,17 @@ export class VoitureDetailsComponent implements OnInit {
   cancelMessage: string = '';
   successMessage: string = '';
 
+  garages: Garage[] = [];
+  page: number = 1;
+  perPage: number = 50;
+  total: number = 0;
+  totalPages: number = 0;
+  nom: string = '';
+  ville: string = '';
+
   constructor(
     private voitureService: VoitureService,
+    private garageService: GarageService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -27,6 +39,7 @@ export class VoitureDetailsComponent implements OnInit {
         this.voiture = voiture;
       });
     }
+    this.getGarages();
   }
 
   editVoiture(): void {
@@ -46,6 +59,8 @@ export class VoitureDetailsComponent implements OnInit {
     this.isEditing = false;
     this.cancelMessage = 'Les modifications ont été annulées.';
     this.successMessage = '';
+    this.ville = '';
+    this.nom = '';
   }
 
   saveVoiture(): void {
@@ -56,6 +71,8 @@ export class VoitureDetailsComponent implements OnInit {
         this.isEditing = false;
         this.successMessage = 'Les modifications ont été enregistrées.';
         this.cancelMessage = '';
+        this.ville = '';
+        this.nom = '';
       });
   }
 
@@ -70,5 +87,20 @@ export class VoitureDetailsComponent implements OnInit {
           this.router.navigate(['/voitures']);
         });
     }
+  }
+
+  getGarages(): void {
+    this.garageService
+      .getAllGarages(this.page, this.perPage, this.nom, this.ville)
+      .subscribe((garages: GarageData) => {
+        this.garages = garages.data;
+        this.total = garages.total;
+        this.totalPages = garages.total_pages;
+      });
+  }
+
+  search(): void {
+    this.page = 1;
+    this.getGarages();
   }
 }

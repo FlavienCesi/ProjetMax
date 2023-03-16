@@ -48,6 +48,7 @@ export class VoituresListComponent implements OnInit {
     this.criterias.Carburant = this.selectedCarburants;
     this.getVoitures();
   }
+
   getPageNumbers(): number[] {
     const pageNumbers: number[] = [];
     for (let i = 1; i <= this.totalPages; i++) {

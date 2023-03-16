@@ -30,12 +30,38 @@
     </div>
   </div>
 </nav>
-
 <div class="container">
   <h2>Ajouter une nouvelle voiture</h2>
+
+  <div class="row">
+    <div class="col-md-5 mb-3">
+      <label for="nom">Nom du garage</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="nom"
+        (ngModelChange)="search()"
+        name="nom"
+        id="nom"
+      />
+    </div>
+    <div class="col-md-5 mb-3">
+      <label for="ville">Ville</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="ville"
+        name="ville"
+        id="ville"
+      />
+    </div>
+    <div class="col-md-2 d-flex justify-content-center align-items-center">
+      <button class="btn btn-success" (click)="search()">Rechercher</button>
+    </div>
+  </div>
   <form (ngSubmit)="addVoiture()" #voitureForm="ngForm">
     <div class="form-group">
-      <label for="plaque">Plaque :</label>
+      <label for="plaque">Plaque</label>
       <input
         type="text"
         class="form-control"
@@ -48,7 +74,7 @@
       />
     </div>
     <div class="form-group">
-      <label for="kilometre">Kilometre :</label>
+      <label for="kilometre">Kilometre</label>
       <input
         type="number"
         class="form-control"
@@ -59,7 +85,7 @@
       />
     </div>
     <div class="form-group">
-      <label for="marque">Marque :</label>
+      <label for="marque">Marque</label>
       <input
         type="text"
         class="form-control"
@@ -70,7 +96,7 @@
       />
     </div>
     <div class="form-group">
-      <label for="modele">Modèle :</label>
+      <label for="modele">Modèle</label>
       <input
         type="text"
         class="form-control"
@@ -81,13 +107,14 @@
       />
     </div>
     <div class="form-group">
-      <label for="annee">Année :</label>
+      <label for="annee">Année </label>
       <select
         class="form-control"
         id="annee"
         name="annee"
         required
         [(ngModel)]="newVoiture.annee"
+        pattern="^[0-9]{4}$"
       >
         <option value="" disabled>Sélectionner une année</option>
         <option *ngFor="let year of years" [value]="year">{{ year }}</option>
@@ -96,93 +123,108 @@
 
     <div class="form-group">
       <label>Carburant :</label>
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="carburant"
-          id="diesel"
-          value="Diezel"
-          [(ngModel)]="newVoiture.carburant"
-        />
-        <label class="form-check-label" for="diesel">Diesel</label>
+      <div class="row">
+        <div class="col-md-3 mb-3 form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="carburant"
+            id="diesel"
+            value="Diezel"
+            [(ngModel)]="newVoiture.carburant"
+            required
+          />
+          <label class="form-check-label" for="diesel">Diesel</label>
+        </div>
+        <div class="col-md-3 mb-3 form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="carburant"
+            id="essence"
+            value="Essence"
+            [(ngModel)]="newVoiture.carburant"
+            required
+          />
+          <label class="form-check-label" for="essence">Essence</label>
+        </div>
+        <div class="col-md-3 mb-3 form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="carburant"
+            id="electrique"
+            value="Electrique"
+            [(ngModel)]="newVoiture.carburant"
+            required
+          />
+          <label class="form-check-label" for="electrique">Electrique</label>
+        </div>
+        <div class="col-md-3 mb-3 form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="carburant"
+            id="gpl"
+            value="GPL"
+            [(ngModel)]="newVoiture.carburant"
+            required
+          />
+          <label class="form-check-label" for="gpl">GPL</label>
+        </div>
       </div>
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="carburant"
-          id="essence"
-          value="Essence"
-          [(ngModel)]="newVoiture.carburant"
-        />
-        <label class="form-check-label" for="essence">Essence</label>
-      </div>
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="carburant"
-          id="electrique"
-          value="Electrique"
-          [(ngModel)]="newVoiture.carburant"
-        />
-        <label class="form-check-label" for="electrique">Electrique</label>
-      </div>
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="carburant"
-          id="gpl"
-          value="GPL"
-          [(ngModel)]="newVoiture.carburant"
-        />
-        <label class="form-check-label" for="gpl">GPL</label>
-      </div>
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="carburant"
-          id="ethanol"
-          value="Ethanol"
-          [(ngModel)]="newVoiture.carburant"
-        />
-        <label class="form-check-label" for="ethanol">Ethanol</label>
-      </div>
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="carburant"
-          id="hybride_e"
-          value="Hybride E"
-          [(ngModel)]="newVoiture.carburant"
-        />
-        <label class="form-check-label" for="hybride_e">Hybride E</label>
-      </div>
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="carburant"
-          id="hybride_d"
-          value="Hybride D"
-          [(ngModel)]="newVoiture.carburant"
-        />
-        <label class="form-check-label" for="hybride_d">Hybride D</label>
+      <div class="row">
+        <div class="col-md-3 mb-3 form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="carburant"
+            id="ethanol"
+            value="Ethanol"
+            [(ngModel)]="newVoiture.carburant"
+            required
+          />
+          <label class="form-check-label" for="ethanol">Ethanol</label>
+        </div>
+        <div class="col-md-3 mb-3 form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="carburant"
+            id="hybride_e"
+            value="Hybride E"
+            [(ngModel)]="newVoiture.carburant"
+            required
+          />
+          <label class="form-check-label" for="hybride_e">Hybride E</label>
+        </div>
+        <div class="col-md-3 mb-3 form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="carburant"
+            id="hybride_d"
+            value="Hybride D"
+            [(ngModel)]="newVoiture.carburant"
+            required
+          />
+          <label class="form-check-label" for="hybride_d">Hybride D</label>
+        </div>
       </div>
     </div>
     <div class="form-group">
       <label for="garage">Garage :</label>
-      <input
-        type="text"
+      <select
         class="form-control"
         id="garage"
         name="garage"
         [(ngModel)]="newVoiture.garage"
-      />
+      >
+        <option value="">Aucun garage</option>
+        <option *ngFor="let garage of garages" [value]="garage.id_garage">
+          {{ garage.nom }} - {{ garage.ville?.ville }}
+        </option>
+      </select>
     </div>
     <div
       *ngIf="submitted && successMessage"
@@ -198,6 +240,7 @@
     >
       {{ errorMessage }}
     </div>
+    <br />
     <button
       type="submit"
       class="btn btn-primary"

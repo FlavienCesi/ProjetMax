@@ -33,13 +33,40 @@
 
 <div class="container">
   <h2>Détails de la voiture</h2>
+
+  <div class="row">
+    <div class="col-md-5 mb-3">
+      <label for="nom">Nom du garage</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="nom"
+        (ngModelChange)="search()"
+        name="nom"
+        id="nom"
+      />
+    </div>
+    <div class="col-md-5 mb-3">
+      <label for="ville">Ville</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="ville"
+        name="ville"
+        id="ville"
+      />
+    </div>
+    <div class="col-md-2 d-flex justify-content-center align-items-center">
+      <button class="btn btn-success" (click)="search()">Rechercher</button>
+    </div>
+  </div>
   <div *ngIf="successMessage" class="alert alert-success">
     {{ successMessage }}
   </div>
   <div *ngIf="cancelMessage" class="alert alert-warning">
     {{ cancelMessage }}
   </div>
-  <form #garageForm="ngForm" (ngSubmit)="saveVoiture()">
+  <form #voitureForm="ngForm" (ngSubmit)="saveVoiture()" novalidate>
     <div class="form-group">
       <label>ID:</label>
       <input
@@ -48,6 +75,7 @@
         name="id_voiture"
         [(ngModel)]="voiture.id_voiture"
         disabled
+        required
       />
     </div>
     <div class="form-group">
@@ -58,16 +86,19 @@
         name="plaque"
         [(ngModel)]="voiture.plaque"
         [disabled]="!isEditing"
+        pattern="^[A-Z]{2}-[0-9]{3}-[A-Z]{2}$"
+        required
       />
     </div>
     <div class="form-group">
       <label>Kilomètre</label>
       <input
         class="form-control"
-        type="text"
+        type="number"
         name="kilometre"
         [(ngModel)]="voiture.kilometre"
         [disabled]="!isEditing"
+        required
       />
     </div>
     <div class="form-group">
@@ -78,6 +109,7 @@
         name="marque"
         [(ngModel)]="voiture.marque!.marque"
         [disabled]="!isEditing"
+        required
       />
     </div>
     <div class="form-group">
@@ -88,6 +120,7 @@
         name="modele"
         [(ngModel)]="voiture.modele!.modele"
         [disabled]="!isEditing"
+        required
       />
     </div>
     <div class="form-group">
@@ -98,18 +131,125 @@
         name="annee"
         [(ngModel)]="voiture.annee!.annee"
         [disabled]="!isEditing"
+        pattern="^[0-9]{4}$"
+        required
       />
     </div>
     <div class="form-group">
-      <label>Carburant:</label>
-      <input
-        class="form-control"
-        type="text"
-        name="carburant"
-        [(ngModel)]="voiture.carburant!.carburant"
-        [disabled]="!isEditing"
-      />
+      <label>Carburant :</label>
+      <div class="row">
+        <div class="col-md-3 mb-3 form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="carburant"
+            id="diesel"
+            value="Diezel"
+            [(ngModel)]="voiture.carburant!.carburant"
+            [disabled]="!isEditing"
+            required
+          />
+          <label class="form-check-label" for="diesel">Diesel</label>
+        </div>
+        <div class="col-md-3 mb-3 form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="carburant"
+            id="essence"
+            value="Essence"
+            [(ngModel)]="voiture.carburant!.carburant"
+            [disabled]="!isEditing"
+            required
+          />
+          <label class="form-check-label" for="essence">Essence</label>
+        </div>
+        <div class="col-md-3 mb-3 form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="carburant"
+            id="electrique"
+            value="Electrique"
+            [(ngModel)]="voiture.carburant!.carburant"
+            [disabled]="!isEditing"
+            required
+          />
+          <label class="form-check-label" for="electrique">Electrique</label>
+        </div>
+        <div class="col-md-3 mb-3 form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="carburant"
+            id="gpl"
+            value="GPL"
+            [(ngModel)]="voiture.carburant!.carburant"
+            [disabled]="!isEditing"
+            required
+          />
+          <label class="form-check-label" for="gpl">GPL</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 mb-3 form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="carburant"
+            id="ethanol"
+            value="Ethanol"
+            [(ngModel)]="voiture.carburant!.carburant"
+            [disabled]="!isEditing"
+            required
+          />
+          <label class="form-check-label" for="ethanol">Ethanol</label>
+        </div>
+        <div class="col-md-3 mb-3 form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="carburant"
+            id="hybride_e"
+            value="Hybride E"
+            [(ngModel)]="voiture.carburant!.carburant"
+            [disabled]="!isEditing"
+            required
+          />
+          <label class="form-check-label" for="hybride_e">Hybride E</label>
+        </div>
+        <div class="col-md-3 mb-3 form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="carburant"
+            id="hybride_d"
+            value="Hybride D"
+            [(ngModel)]="voiture.carburant!.carburant"
+            [disabled]="!isEditing"
+            required
+          />
+          <label class="form-check-label" for="hybride_d">Hybride D</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="garage">Garage :</label>
+        <select
+          class="form-control"
+          id="garage"
+          name="garage"
+          [(ngModel)]="voiture.garage!.id_garage"
+          [disabled]="!isEditing"
+          required
+        >
+          <option value=" ">Aucun garage</option>
+          <option *ngFor="let garage of garages" [value]="garage.id_garage">
+            {{ garage.nom }} - {{ garage.ville?.ville }}
+          </option>
+        </select>
+      </div>
     </div>
+    <br />
     <div class="form-group">
       <button class="btn btn-primary" type="submit" [disabled]="!isEditing">
         Enregistrer
@@ -124,6 +264,7 @@
       </button>
     </div>
   </form>
+  <br />
   <div *ngIf="!isEditing">
     <button class="btn btn-primary" (click)="editVoiture()">Modifier</button>
     <button class="btn btn-danger" type="button" (click)="deleteVoiture()">

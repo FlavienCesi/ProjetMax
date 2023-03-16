@@ -54,12 +54,12 @@
         [(ngModel)]="criterias.Modele"
       />
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2 d-flex justify-content-center align-items-center">
       <button class="btn btn-success" (click)="search()">Rechercher</button>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6 mb-3">
+    <div class="col-md-5 text-center mb-3">
       <label for="kilometreMin">Kilométrage minimum</label>
       <input
         type="range"
@@ -73,7 +73,7 @@
       />
       <span>{{ criterias.KilometreMin }}</span>
     </div>
-    <div class="col-md-6 mb-3">
+    <div class="col-md-5 text-center mb-3">
       <label for="kilometreMax">Kilométrage maximum</label>
       <input
         type="range"
@@ -89,7 +89,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6 mb-3">
+    <div class="col-md-5 text-center mb-3">
       <label for="anneeMin">Année minimum</label>
       <input
         type="range"
@@ -103,7 +103,7 @@
       />
       <span>{{ criterias.AnneeMin }}</span>
     </div>
-    <div class="col-md-6 mb-3">
+    <div class="col-md-5 text-center mb-3">
       <label for="anneeMax">Année maximum</label>
       <input
         type="range"
@@ -118,7 +118,7 @@
       <span>{{ criterias.AnneeMax }}</span>
     </div>
   </div>
-  <label>Carburant</label>
+  <label>Carburant</label><br /><br />
   <div class="row">
     <div class="col-md-3 mb-3 form-check">
       <input
@@ -199,15 +199,17 @@
       <label class="form-check-label" for="hybride_s">Hybride S</label>
     </div>
   </div>
+  <br />
   <div class="col-md-3 mb-3">
     <input
       type="checkbox"
+      class="form-check-input"
       id="garage"
       class="form-check-inline"
       [(ngModel)]="criterias.Garage"
       (ngModelChange)="search()"
     />
-    <label for="garage">Dans un garage</label>
+    <label class="form-check-label" for="garage">Dans un garage</label>
   </div>
 
   <div class="table-responsive">
@@ -221,6 +223,7 @@
           <th>Modèle</th>
           <th>Année</th>
           <th>Carburant</th>
+          <th>Garage</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -233,6 +236,10 @@
           <td>{{ voiture.modele?.modele }}</td>
           <td>{{ voiture.annee?.annee }}</td>
           <td>{{ voiture.carburant?.carburant }}</td>
+          <td>
+            {{ voiture.garage?.nom }}<br />
+            {{ voiture.garage?.ville?.ville }}
+          </td>
           <td>
             <a
               [routerLink]="['/voiture', voiture.id_voiture]"

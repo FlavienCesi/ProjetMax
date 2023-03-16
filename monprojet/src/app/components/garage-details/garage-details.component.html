@@ -41,55 +41,63 @@
   </div>
   <form #garageForm="ngForm" (ngSubmit)="saveGarage()">
     <div class="form-group">
-      <label>ID:</label>
+      <label>ID</label>
       <input
         class="form-control"
         type="text"
         name="id_garage"
         [(ngModel)]="garage.id_garage"
         disabled
+        required
       />
     </div>
     <div class="form-group">
-      <label>Nom:</label>
+      <label>Nom</label>
       <input
         class="form-control"
         type="text"
         name="nom"
         [(ngModel)]="garage.nom"
         [disabled]="!isEditing"
+        required
       />
     </div>
     <div class="form-group">
-      <label>Numéro de téléphone:</label>
+      <label>Numéro de téléphone</label>
       <input
         class="form-control"
         type="text"
         name="numeroTelephone"
         [(ngModel)]="garage.numeroTelephone"
         [disabled]="!isEditing"
+        pattern="^0[1-9][0-9]{8}$"
+        required
       />
     </div>
     <div class="form-group">
-      <label>Email:</label>
+      <label>Email</label>
       <input
         class="form-control"
-        type="text"
+        type="email"
         name="mail"
         [(ngModel)]="garage.mail"
         [disabled]="!isEditing"
+        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+        required
       />
     </div>
     <div class="form-group">
-      <label>Ville:</label>
+      <label>Ville</label>
       <input
         class="form-control"
         type="text"
         name="ville"
         [(ngModel)]="garage.ville!.ville"
         [disabled]="!isEditing"
+        required
       />
     </div>
+    <br />
     <div class="form-group">
       <button class="btn btn-primary" type="submit" [disabled]="!isEditing">
         Enregistrer
@@ -104,6 +112,7 @@
       </button>
     </div>
   </form>
+  <br />
   <div *ngIf="!isEditing">
     <button class="btn btn-primary" (click)="editGarage()">Modifier</button>
     <button class="btn btn-danger" type="button" (click)="deleteGarage()">
