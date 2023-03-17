@@ -125,7 +125,7 @@ public class VoitureService {
                     p.setModele(modele);
                     p.setAnnee(annee);
                     p.setCarburant(carburant);
-                    if (voiture.getGarage() != null && voiture.getGarage().getId_garage() != null && voiture.getGarage().getId_garage().equals(0L)) {
+                    if (voiture.getGarage().getId_garage().equals(0L)) {
                         p.setGarage(null);
                     } else {
                         p.setGarage(voiture.getGarage());

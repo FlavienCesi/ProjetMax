@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Voiture } from '../models/voiture.model';
 import { VoitureData } from '../models/voiture-data.model';
 import { GarageData } from '../models/garage-data.model';
@@ -51,7 +52,14 @@ export class VoitureService {
 
   getVoitureById(id: number): Observable<Voiture> {
     const url = `${this.baseUrl}/${id}`;
-    return this.http.get<Voiture>(url);
+    return this.http.get<Voiture>(url).pipe(
+      map((voiture) => {
+        if (!voiture.garage) {
+          voiture.garage = { id_garage: 0 };
+        }
+        return voiture;
+      })
+    );
   }
 
   addVoiture(voiture: Voiture): Observable<Voiture> {

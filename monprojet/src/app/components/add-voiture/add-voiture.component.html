@@ -30,9 +30,8 @@
     </div>
   </div>
 </nav>
+<br /><br /><br />
 <div class="container">
-  <h2>Ajouter une nouvelle voiture</h2>
-
   <div class="row">
     <div class="col-md-5 mb-3">
       <label for="nom">Nom du garage</label>
@@ -59,7 +58,23 @@
       <button class="btn btn-success" (click)="search()">Rechercher</button>
     </div>
   </div>
+  <div class="text-center">
+    <h2>Ajouter une nouvelle voiture</h2>
+  </div>
   <form (ngSubmit)="addVoiture()" #voitureForm="ngForm">
+    <div class="form-group">
+      <label for="garage">Garage</label>
+      <select
+        class="form-control"
+        id="garage"
+        name="garage"
+        [(ngModel)]="newVoiture.garage"
+      >
+        <option *ngFor="let garage of garages" [value]="garage.id_garage">
+          {{ garage.nom }} - {{ garage.ville?.ville }}
+        </option>
+      </select>
+    </div>
     <div class="form-group">
       <label for="plaque">Plaque</label>
       <input
@@ -68,7 +83,6 @@
         id="plaque"
         name="plaque"
         pattern="[A-Z]{2}-[0-9]{3}-[A-Z]{2}"
-        placeholder="XX-000-XX"
         required
         [(ngModel)]="newVoiture.plaque"
       />
@@ -106,7 +120,7 @@
         [(ngModel)]="newVoiture.modele"
       />
     </div>
-    <div class="form-group">
+    <div class="form-group mb-3">
       <label for="annee">Année </label>
       <select
         class="form-control"
@@ -114,7 +128,6 @@
         name="annee"
         required
         [(ngModel)]="newVoiture.annee"
-        pattern="^[0-9]{4}$"
       >
         <option value="" disabled>Sélectionner une année</option>
         <option *ngFor="let year of years" [value]="year">{{ year }}</option>
@@ -122,7 +135,6 @@
     </div>
 
     <div class="form-group">
-      <label>Carburant :</label>
       <div class="row">
         <div class="col-md-3 mb-3 form-check">
           <input
@@ -130,7 +142,7 @@
             type="radio"
             name="carburant"
             id="diesel"
-            value="Diezel"
+            value="Diesel"
             [(ngModel)]="newVoiture.carburant"
             required
           />
@@ -212,20 +224,6 @@
         </div>
       </div>
     </div>
-    <div class="form-group">
-      <label for="garage">Garage :</label>
-      <select
-        class="form-control"
-        id="garage"
-        name="garage"
-        [(ngModel)]="newVoiture.garage"
-      >
-        <option value="">Aucun garage</option>
-        <option *ngFor="let garage of garages" [value]="garage.id_garage">
-          {{ garage.nom }} - {{ garage.ville?.ville }}
-        </option>
-      </select>
-    </div>
     <div
       *ngIf="submitted && successMessage"
       class="alert alert-success"
@@ -250,3 +248,4 @@
     </button>
   </form>
 </div>
+<footer><br /><br /><br /><br /><br /></footer>

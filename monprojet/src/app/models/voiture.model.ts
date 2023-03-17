@@ -12,5 +12,5 @@ export class Voiture {
   modele?: Modele;
   annee?: Annee;
   carburant?: Carburant;
-  garage?: Garage;
+  garage?: Garage | null;
 }

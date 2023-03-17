@@ -16,7 +16,7 @@ public class Garage {
     @Column(name = "nom")
     private String nom;
     @Column(name = "numero_telephone")
-    private Integer numeroTelephone;
+    private String numeroTelephone;
     @Column(name = "mail")
     private String mail;
     @ManyToOne

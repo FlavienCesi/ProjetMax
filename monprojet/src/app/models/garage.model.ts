@@ -1,9 +1,9 @@
 import { Ville } from './ville.model';
 
 export class Garage {
-  id_garage?: number;
+  id_garage?: number | null;
   nom?: string;
-  numeroTelephone?: number;
+  numeroTelephone?: string;
   mail?: string;
   ville?: Ville;
 }

@@ -102,6 +102,6 @@ public class GarageService {
 
     public String deleteGarage(Long id_garage) {
         garageRepository.deleteById(id_garage);
-        return "Garage supprimé";
+        return "";
     }
 }

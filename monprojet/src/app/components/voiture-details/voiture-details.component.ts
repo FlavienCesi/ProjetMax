@@ -16,6 +16,7 @@ export class VoitureDetailsComponent implements OnInit {
   isEditing: boolean = false;
   cancelMessage: string = '';
   successMessage: string = '';
+  years: number[] = [];
 
   garages: Garage[] = [];
   page: number = 1;
@@ -38,6 +39,10 @@ export class VoitureDetailsComponent implements OnInit {
       this.voitureService.getVoitureById(id).subscribe((voiture: Voiture) => {
         this.voiture = voiture;
       });
+    }
+    const currentYear = new Date().getFullYear();
+    for (let i = currentYear; i >= 1990; i--) {
+      this.years.push(i);
     }
     this.getGarages();
   }
@@ -74,6 +79,11 @@ export class VoitureDetailsComponent implements OnInit {
         this.ville = '';
         this.nom = '';
       });
+    this.isEditing = false;
+    this.successMessage = 'Les modifications ont été enregistrées.';
+    this.cancelMessage = '';
+    this.ville = '';
+    this.nom = '';
   }
 
   deleteVoiture(): void {
@@ -102,5 +112,9 @@ export class VoitureDetailsComponent implements OnInit {
   search(): void {
     this.page = 1;
     this.getGarages();
+  }
+
+  getCurrentYear(): number {
+    return new Date().getFullYear();
   }
 }
